@@ -12,6 +12,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'jacoco'
 
 bootJar {
     baseName = 'restyserv'
@@ -32,3 +33,7 @@ dependencies {
     testCompile('com.jayway.jsonpath:json-path')
 }
 
+jacoco {
+    toolVersion = "0.8.2"
+    reportsDir = file("$buildDir/customJacocoReportDir")
+}
