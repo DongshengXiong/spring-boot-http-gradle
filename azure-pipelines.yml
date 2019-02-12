@@ -21,3 +21,21 @@ steps:
     publishJUnitResults: false
     testResultsFiles: '**/TEST-*.xml'
     tasks: 'build'
+
+# Publish Cobertura or JaCoCo code coverage results from a build
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'JaCoCo' 
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/reports/code-cov-report.xml'
+    reportDirectory: '$(System.DefaultWorkingDirectory)/**/reports/code-cov-report.html'
+    failIfCoverageEmpty: true
+    
+- task: CopyFiles@2
+  inputs:
+    contents: '**/spring*.jar'
+    targetFolder: '$(build.artifactStagingDirectory)'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    artifactName: 'jars'
+    pathToPublish: '$(build.artifactStagingDirectory)'
